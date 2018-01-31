@@ -26,5 +26,5 @@ W3-008      | Blogger     | wil ik een afbeeldingen in een artikel kunnen plaats
 
 # Resources
 
-GitHub - https://github.com/RJK-Engineering/GorillaBlog
-Trello - https://trello.com/b/z7dWO0Ds/gorillablog
+* GitHub - https://github.com/RJK-Engineering/GorillaBlog
+* Trello - https://trello.com/b/z7dWO0Ds/gorillablog
