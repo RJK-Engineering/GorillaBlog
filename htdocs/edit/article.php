@@ -11,7 +11,8 @@ if (isset($_POST['title'][0], $_POST['text'][0])) {
         WriteArticle($_POST['title'][0], $_POST['text'][0]);
     }
 } else {
-    GetArticles();
+    http_response_code(400);
+    exit;
 }
 
 function UpdateArticle($id, $title, $text) {
@@ -37,9 +38,6 @@ function WriteArticle($title, $text) {
     $statement->execute();
 
     echo $db->lastInsertId();
-}
-
-function GetArticles() {
 }
 
 function DbConnect() {
