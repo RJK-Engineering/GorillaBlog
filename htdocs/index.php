@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GorillaBlog</title>
-    <link rel="stylesheet" href="../GorillaBlog.css">
+    <link rel="stylesheet" href="GorillaBlog.css">
 </head>
 <body>
     <h1>GorillaBlog Articles</h1>
