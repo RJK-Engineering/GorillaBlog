@@ -1,0 +1,40 @@
+#messages {
+    border: 2px solid grey;
+    height: 200px;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll; /* Add vertical scrollbar */
+    margin: 10px 0px;
+    word-wrap: break-word;
+}
+
+#sending {
+    height: 30px;
+}
+
+#value {
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+}
+
+.userName {
+    font-weight: bold;
+    color: grey;
+}
+
+.info {
+    font-weight: bold;
+    color: green;
+}
+
+.warning {
+    font-weight: bold;
+    color: orange;
+}
+
+.error {
+    font-weight: bold;
+    color: red;
+}
