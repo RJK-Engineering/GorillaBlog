@@ -12,6 +12,11 @@ function addEvents() {
             submitArticle();
         }
     });
+    $$('#newArticle').addEvents({
+        click: function() {
+            newArticle();
+        }
+    });
 }
 
 function submitArticle(id, title, text) {
@@ -21,6 +26,13 @@ function submitArticle(id, title, text) {
         text: $$('#text').get('value')
     };
     submitArticleRequest.post(article);
+}
+
+function newArticle() {
+    $$('#id').set('value', '');
+    $$('#title').set('value', '');
+    $$('#text').set('value', '');
+    displayStatus('');
 }
 
 var submitArticleRequest = new Request.JSON({
