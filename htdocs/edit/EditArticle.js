@@ -4,7 +4,7 @@ window.addEvent('domready', function() {
 });
 
 /* CONFIGURATION */
-var apiUrl = 'article.php';
+var articleUrl = 'article.php';
 
 function addEvents() {
     $$('#submitArticle').addEvents({
@@ -24,7 +24,7 @@ function submitArticle(id, title, text) {
 }
 
 var submitArticleRequest = new Request.JSON({
-    url: apiUrl,
+    url: articleUrl,
     method: 'post',
     onRequest: function() {
         displayStatus('Submitting...');
