@@ -37,3 +37,7 @@ var submitArticleRequest = new Request.JSON({
         displayStatus('Error submitting article, please try again');
     }
 });
+
+function displayStatus(text) {
+    $$('#status').set('text', text);
+}
