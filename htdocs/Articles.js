@@ -4,14 +4,14 @@ window.addEvent('domready', function() {
 });
 
 /* CONFIGURATION */
-var articlesUrl = 'articles.php';
+var articleUrl = 'article.php';
 
 function loadData() {
     getArticlesRequest.get();
 }
 
 var getArticlesRequest = new Request.JSON({
-    url: articlesUrl,
+    url: articleUrl,
     onSuccess: function(articles) {
         articles.each(function (article) {
             addArticle(article);
