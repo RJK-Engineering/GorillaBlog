@@ -1,10 +1,12 @@
 // MooTools domready function
 window.addEvent('domready', function() {
     addEvents();
+    loadData();
 });
 
 /* CONFIGURATION */
 var articleUrl = 'article.php';
+var categoryUrl = '../category.php';
 
 function addEvents() {
     $$('#submitArticle').addEvents({
@@ -17,6 +19,32 @@ function addEvents() {
             newArticle();
         }
     });
+}
+
+function loadData() {
+    getCategoriesRequest.get();
+}
+
+var getCategoriesRequest = new Request.JSON({
+    url: categoryUrl,
+    onSuccess: function(categories) {
+        createCategoryInput(categories);
+    }
+});
+
+function createCategoryInput(categories) {
+    var div = $$('#categoryInput');
+    div.set('text', '');
+
+    var input = new Element('input',
+        { type: 'text', list: 'categories', name: 'category' });
+    div.grab(input);
+
+    var datalist = new Element('datalist', { id: 'categories', } );
+    categories.each(function (category) {
+        datalist.grab(new Element('option', { value: category.title }));
+    });
+    div.grab(datalist);
 }
 
 function submitArticle(id, title, text) {
