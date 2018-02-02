@@ -51,7 +51,8 @@ function submitArticle(id, title, text) {
     var article = {
         id: $$('#id').get('value'),
         title: $$('#title').get('value'),
-        text: $$('#text').get('value')
+        text: $$('#text').get('value'),
+        category: $$('#category').get('value')
     };
     submitArticleRequest.post(article);
 }
