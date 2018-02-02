@@ -36,8 +36,12 @@ function createCategoryInput(categories) {
     var div = $$('#categoryInput');
     div.set('text', '');
 
-    var input = new Element('input',
-        { type: 'text', list: 'categories', name: 'category' });
+    var input = new Element('input', {
+        id : 'category',
+        type: 'text',
+        list: 'categories',
+        name: 'category'
+    });
     div.grab(input);
 
     var datalist = new Element('datalist', { id: 'categories', } );
