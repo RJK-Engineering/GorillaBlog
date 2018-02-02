@@ -1,18 +1,17 @@
 // MooTools domready function
 window.addEvent('domready', function() {
-    loadArticles();
+    loadData();
 });
 
 /* CONFIGURATION */
 var articlesUrl = 'articles.php';
 
-function loadArticles() {
+function loadData() {
     getArticlesRequest.get();
 }
 
 var getArticlesRequest = new Request.JSON({
     url: articlesUrl,
-    method: 'get',
     onSuccess: function(articles) {
         articles.each(function (article) {
             addArticle(article);
@@ -21,10 +20,26 @@ var getArticlesRequest = new Request.JSON({
 });
 
 function addArticle(article) {
-    var div = $$('#articles');
+    var articleElem = new Element('article', { class: 'article' });
+    $$('#articles').grab(articleElem);
+
+    var header = new Element('h3', { class: 'title' });
+    header.appendHTML(article.title);
+    articleElem.grab(header);
+
     var text = formatText(article.text);
-    div.appendHTML('<h3 class="title">' + article.title + '</h3>');
-    div.appendHTML('<div class="article">' + text + '</div>');
+    articleElem.appendHTML(text);
+
+    var editButton = new Element('button', {
+        class: 'editButton',
+        events: {
+            click: function () {
+                window.location.href = 'edit/?id=' + article.id;
+            }
+        }
+    });
+    editButton.appendText('Edit');
+    articleElem.grab(editButton);
 }
 
 function formatText(text) {
