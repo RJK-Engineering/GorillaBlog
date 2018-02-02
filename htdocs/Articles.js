@@ -1,10 +1,12 @@
 // MooTools domready function
 window.addEvent('domready', function() {
     loadData();
+    loadCategoryInput(categoryUrl);
 });
 
 /* CONFIGURATION */
 var articleUrl = 'article.php';
+var categoryUrl = 'category.php';
 
 function loadData() {
     getArticlesRequest.get();
