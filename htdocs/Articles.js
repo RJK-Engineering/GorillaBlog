@@ -44,7 +44,19 @@ function addArticle(article) {
 }
 
 function formatText(text) {
+    // paragraphs
     text = '<p>' + text + '</p>';
     text = text.replace(/\n\n/g, '</p><p>');
+
+    // bold
+    text = text.replace(/\*.+\*/g, function (x) {
+        return '<b>' + x.replace(/\*/g, '') + '</b>';
+    });
+
+    // italic
+    text = text.replace(/_.+_/g, function (x) {
+        return '<i>' + x.replace(/_/g, '') + '</i>';
+    });
+
     return text;
 }
