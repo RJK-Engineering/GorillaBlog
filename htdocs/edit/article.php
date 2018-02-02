@@ -6,18 +6,18 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-Requested-With, X-Request');
 header('Content-Type: application/json');
 
-if (isset($_POST['title'][0], $_POST['text'][0])) {
+if (isset($_POST['title'][0], $_POST['text'][0], $_POST['category'][0])) {
     if (isset($_POST['id'][0]) && $_POST['id'][0]) {
-        UpdateArticle($_POST['id'][0], $_POST['title'][0], $_POST['text'][0]);
+        UpdateArticle($_POST['id'][0], $_POST['title'][0], $_POST['text'][0], $_POST['category'][0]);
     } else {
-        WriteArticle($_POST['title'][0], $_POST['text'][0]);
+        WriteArticle($_POST['title'][0], $_POST['text'][0], $_POST['category'][0]);
     }
 } else {
     http_response_code(400);
     exit;
 }
 
-function UpdateArticle($id, $title, $text) {
+function UpdateArticle($id, $title, $text, $category) {
     $db = DbConnect();
 
     $sql = "update articles set title=:title, text=:text where id=:id";
@@ -30,7 +30,7 @@ function UpdateArticle($id, $title, $text) {
     echo $id;
 }
 
-function WriteArticle($title, $text) {
+function WriteArticle($title, $text, $category) {
     $db = DbConnect();
 
     $sql = "insert into articles (title, text) values(:title, :text)";
@@ -39,7 +39,16 @@ function WriteArticle($title, $text) {
     $statement->bindParam(':text', $text);
     $statement->execute();
 
-    echo $db->lastInsertId();
+    $id = $db->lastInsertId();
+
+    $sql = "insert into article_categories (article_id, category_id)"
+        . " values(:art_id, (select id from categories where title=:cat_title))";
+    $statement = $db->prepare($sql);
+    $statement->bindParam(':art_id', $id);
+    $statement->bindParam(':cat_title', $category);
+    $statement->execute();
+
+    echo $id;
 }
 
 ?>
