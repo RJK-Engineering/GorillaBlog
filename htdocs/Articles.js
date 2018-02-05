@@ -41,21 +41,6 @@ function addArticle(article) {
 
     var text = formatText(article.text);
     articleElem.appendHTML(text);
-
-    addEditButton(article, articleElem);
-}
-
-function addEditButton(article, articleElem) {
-    var editButton = new Element('button', {
-        class: 'editButton',
-        events: {
-            click: function () {
-                window.location.href = 'edit/?id=' + article.id;
-            }
-        }
-    });
-    editButton.appendText('Edit');
-    articleElem.grab(editButton);
 }
 
 function formatText(text) {
