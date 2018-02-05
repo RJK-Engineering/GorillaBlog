@@ -19,10 +19,18 @@ W3-001      | Blogger     | artikelen om mijn blog plaatsen | ik mijn ideeen met
 W3-002      | Lezer       | een overzicht hebben van de artikelen die mijn favoriete blogger heeft geschreven met het meest recente artikel bovenaan | ik zeker weet dat ik de meeste recente artikelen blijf lezen
 W3-003      | Blogger     | een artikel aan één categorie kunnen koppelen | mijn lezers sneller artikelen kunnen vinden rondom een bepaald thema
 W3-004      | Lezer       | alleen de artikelen in een bepaalde categorie kunnen selecteren met behulp van een kolom aan de linkerkant van het scherm | ik gericht alle artikelen over een bepaald thema kan lezen
-W3-005      | Blogger     | zelf categorieën kunnen toevoegen | ik niet afhankelijk ben van de developer die mijn blog heeft ontwikkeld
+W3-005*     | Blogger     | zelf categorieën kunnen toevoegen | ik niet afhankelijk ben van de developer die mijn blog heeft ontwikkeld
 W3-006      | Blogger     | ook meerdere categorieën kunnen koppelen aan een artikel | ik me niet hoef te beperken tot één thema, wat in de praktijk nooit zo is
-W3-007      | Blogger     | wil ik de tekst in het artikel kunnen formateren (bijv. vet gedrukt of cursief maken) | ik duidelijker mijn boodschap kan overbrengen
-W3-008      | Blogger     | wil ik een afbeeldingen in een artikel kunnen plaatsen | ik duidelijker mijn boodschap kan overbrengen
+W3-007*     | Blogger     | wil ik de tekst in het artikel kunnen formateren (bijv. vet gedrukt of cursief maken) | ik duidelijker mijn boodschap kan overbrengen
+W3-008*     | Blogger     | wil ik een afbeeldingen in een artikel kunnen plaatsen | ik duidelijker mijn boodschap kan overbrengen
+W4-001      | Blogger     | wil ik een text-expander die als ik een artikel aan het schrijven ben door mij zelf gedefinieerde afkortingen die ik type direct omzet in de volledige tekst<br><br><i>Voorbeeld: Als ik CG type moet er direct CodeGorilla verschijnen. En als ik gn type mot er direct Groningen verschijnen<br><br>Tip: Maak hiervoor gebruik van Javascript</i> | ik sneller mijn artikelen schrijven
+W4-002      | Lezer       | wil ik anoniem commentaar kunnen geven op een artikel | ik mijn mening over het artikel kan geven
+W4-003      | Lezer       | alleen de artikelen in een bepaalde categorie kunnen selecteren met behulp van een kolom aan de linkerkant van het scherm ​EN wordt de pagina niet opnieuwe ingelezen<br><br><i>Tip: Maak hiervoor gebruik van Javascript. NB: Dit is een variant van W3-004</i> | ik nog sneller gericht alle artikelen over een bepaald thema kan lezen
+W4-004      | Blogger     | wil ik ongewenst commentaar kunnen verwijderen | ik trollen kan stoppen
+W4-005      | Blogger     | wil ik voor een artikel kunnen instellen dat geen commentaar kan worden gegeven | ik een uit de hand gelopen discussie kan stoppen
+
+\* = Mocht je nog niet begonnen zijn met W3-005, W3-007 en W3-008, laat dat dan nog even zitten. De overige user-stories zijn op dit moment
+belangrijker, mocht je deze klaar hebben, dan graag verder gaan met W3-005, W3-007 en W3-008.
 
 # Resources
 
