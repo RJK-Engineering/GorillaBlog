@@ -2,6 +2,8 @@
 
 require_once 'GorillaBlogDb.php';
 
+$db = new GorillaBlogDb();
+
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -34,7 +36,7 @@ require_once 'GorillaBlogDb.php';
                 </div>
 
                 <div id="articles" class="grid">
-                    <?php PrintArticles() ?>
+                    <?php PrintArticles($db) ?>
                 </div>
             </div>
         </div>
@@ -52,8 +54,8 @@ require_once 'GorillaBlogDb.php';
 
 <?php
 
-function PrintArticles() {
-    foreach (GetArticles() as $id => $article) {
+function PrintArticles($db) {
+    foreach ($db->getArticles() as $id => $article) {
         echo '<article id="article' . $id . '" class="article ' . GetCategoryClassName($article) . ' grid-item">';
         echo '<h3 class="title">' . $article['title'] . '</h3>';
         echo '<div class="blogtext">' . $article['text'] . '</div>';
