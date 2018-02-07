@@ -23,22 +23,33 @@ require_once 'GorillaBlogDb.php';
         <label for="title">Category:</label> <div id="categoryInput"></div>
     </div>
 
+    <div class="filter-buttons">
+        <button data-filter="article">All</button>
+        <button data-filter="economics">Economics</button>
+    </div>
+
+    <div id="articles" class="grid">
 <?php
 
 foreach (GetArticles() as $id => $article) {
-    echo '<article class="article">';
+    echo '<article class="article ' . GetCategoryClassName($article) . ' grid-item">';
     echo '<h3 class="title">' . $article['title'] . '</h3>';
     echo '<div class="blogtext">' . $article['text'] . '</div>';
     echo '</article>';
 }
 
+function GetCategoryClassName($article) {
+    return preg_replace('/\s+/', '-', strtolower($article['category']));
+}
+
 ?>
+    </div>
 
     <hr>
     <div>Sources available on <a href="https://github.com/RJK-Engineering/GorillaBlog">GitHub</a></div>
 
-    <script src="https://fastcdn.org/MooTools/1.5.2/MooTools-Core-compat-compressed.js"></script>
-    <script src="Articles.js"></script>
-    <script src="Components.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
