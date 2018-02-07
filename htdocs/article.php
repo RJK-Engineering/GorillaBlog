@@ -26,13 +26,13 @@ function GetArticles() {
 function GetArticlesByCategory($category) {
     $db = DbConnect();
 
-    $sql = "select a.id, a.title, a.text"
-        .   " from articles a"
-        .   " join article_categories ac"
-        .     " on ac.article_id = a.id"
-        .   " join categories c"
-        .     " on ac.category_id = c.id"
-        .  " where c.title = :category";
+    $sql = "select a.id, a.title, a.text" .
+            " from articles a" .
+            " join article_categories ac" .
+              " on ac.article_id = a.id" .
+            " join categories c" .
+              " on ac.category_id = c.id" .
+           " where c.title = :category";
     $statement = $db->prepare($sql);
     $statement->bindParam(':category', $category);
     $statement->execute();
