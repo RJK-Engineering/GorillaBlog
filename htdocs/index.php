@@ -1,3 +1,8 @@
+<?php
+
+require_once 'GorillaBlogDb.php';
+
+?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -17,7 +22,17 @@
     <div class="input">
         <label for="title">Category:</label> <div id="categoryInput"></div>
     </div>
-    <div id="articles"></div>
+
+<?php
+
+foreach (GetArticles() as $id => $article) {
+    echo '<article class="article">';
+    echo '<h3 class="title">' . $article['title'] . '</h3>';
+    echo '<div class="blogtext">' . $article['text'] . '</div>';
+    echo '</article>';
+}
+
+?>
 
     <hr>
     <div>Sources available on <a href="https://github.com/RJK-Engineering/GorillaBlog">GitHub</a></div>

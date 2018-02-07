@@ -1,35 +1,10 @@
 // MooTools domready function
 window.addEvent('domready', function() {
-    loadArticles();
     loadCategoryInput(categoryUrl);
-    addEvents();
 });
 
 /* CONFIGURATION */
-var articleUrl = 'article.php';
 var categoryUrl = 'category.php';
-
-function loadArticles(category) {
-    var url = articleUrl;
-    if (category && category != '') url += '?category=' + category;
-
-    $$('#articles').set('text', '');
-
-    new Request.JSON({
-        url: url,
-        onSuccess: function(articles) {
-            articles.each(function (article) {
-                addArticle(article);
-            });
-        }
-    }).get();
-}
-
-function addEvents() {
-    $$('#categoryInput').addEvent('change', function () {
-        loadArticles($$('#category').get('value'));
-    });
-}
 
 function addArticle(article) {
     var articleElem = new Element('article', { class: 'article' });
