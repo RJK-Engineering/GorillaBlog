@@ -25,3 +25,7 @@ label {
 .title {
     margin-top: 20px;
 }
+
+.filter-button {
+    cursor: pointer;
+}

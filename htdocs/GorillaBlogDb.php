@@ -3,8 +3,20 @@
 class GorillaBlogDb {
 
     private $db;
+    private $articles = [];
+    private $categories = [];
 
-    function getArticles() {
+    function getArticles () {
+        if (!count($this->articles)) $this->loadArticles();
+        return $this->articles;
+    }
+
+    function getCategories () {
+        if (!count($this->articles)) $this->loadArticles();
+        return $this->categories;
+    }
+
+    function loadArticles() {
         $db = $this->connect();
 
         $sql = "select a.id, a.title, a.text, c.title category
@@ -15,7 +27,31 @@ class GorillaBlogDb {
         $statement = $db->prepare($sql);
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        // build list of available categories and a list of categories for each article
+        $categoryIndex = [];
+        $prevId = 0;
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $currId = $row['id'];
+            if ($currId == $prevId) {
+                if ($row['category']) {
+                    array_push($this->articles[$currId]['category'], $row['category']);
+                    $categoryIndex[$row['category']] = 1;
+                }
+            } else {
+                if ($row['category']) {
+                    $category = $row['category'];
+                    $row['category'] = [ $category ];
+                    $categoryIndex[$category] = 1;
+                } else {
+                    $row['category'] = [];
+                }
+                $this->articles[$currId] = $row;
+            }
+            $prevId = $currId;
+        }
+
+        $this->categories = array_keys($categoryIndex);
+        sort($this->categories);
     }
 
     function connect() {

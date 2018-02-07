@@ -24,16 +24,12 @@ $db = new GorillaBlogDb();
                     <div class="menuitem"><a href="edit">New Article</a></div>
                 </div>
                 <h5 class="headerLeft">Categories</h5>
-                <div class="menu" id="mainMenu">
+                <div class="filter-buttons">
+                    <?php PrintCategories($db) ?>
                 </div>
             </div>
             <div class="col-6">
                 <h1>GorillaBlog Articles</h1>
-
-                <div class="filter-buttons">
-                    <button data-filter="article">All</button>
-                    <button data-filter="economics">Economics</button>
-                </div>
 
                 <div id="articles" class="grid">
                     <?php PrintArticles($db) ?>
@@ -54,17 +50,32 @@ $db = new GorillaBlogDb();
 
 <?php
 
+function PrintCategories($db) {
+    echo '<ul>';
+    echo '<li class="filter-button" data-filter="article">All</li>';
+    foreach ($db->getCategories() as $category) {
+        echo '<li class="filter-button" data-filter=".';
+        echo GetCategoryClassName($category) . '">';
+        echo $category . '</li>';
+    }
+    echo '</ul>';
+}
+
 function PrintArticles($db) {
-    foreach ($db->getArticles() as $id => $article) {
-        echo '<article id="article' . $id . '" class="article ' . GetCategoryClassName($article) . ' grid-item">';
+    foreach ($db->getArticles() as $article) {
+        echo '<article id="article-' . $article['id'] . '" class="article';
+        foreach ($article['category'] as $category) {
+            echo ' ' . GetCategoryClassName($category);
+        }
+        echo ' grid-item">';
         echo '<h3 class="title">' . $article['title'] . '</h3>';
         echo '<div class="blogtext">' . $article['text'] . '</div>';
         echo '</article>';
     }
 }
 
-function GetCategoryClassName($article) {
-    return preg_replace('/\s+/', '-', strtolower($article['category']));
+function GetCategoryClassName($category) {
+    return preg_replace('/\s+/', '-', strtolower($category));
 }
 
 ?>

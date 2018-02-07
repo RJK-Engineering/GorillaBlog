@@ -5,7 +5,7 @@ jQuery(function ($) {
     });
 
     // filter items on button click
-    $('.filter-buttons').on( 'click', 'button', function() {
+    $('.filter-buttons').on('click', '.filter-button', function() {
         var filterValue = $(this).attr('data-filter');
         $('#articles').isotope({ filter: filterValue });
     });
