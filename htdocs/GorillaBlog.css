@@ -13,3 +13,15 @@
 label {
     font-weight: bold;
 }
+
+.blogtext {
+    font-size: 14pt;
+}
+
+.headerLeft {
+    margin-top: 10px;
+}
+
+.title {
+    margin-top: 20px;
+}
