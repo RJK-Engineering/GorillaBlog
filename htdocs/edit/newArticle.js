@@ -2,10 +2,17 @@
 var articleUrl = 'article.php';
 
 jQuery(function ($) {
-    addEvents();
+    addAddCategoryEventHandler();
+    addSubmitEventHandler();
 });
 
-function addEvents() {
+function addAddCategoryEventHandler() {
+    $("#addCategory").on('click', null, function() {
+        alert($("#category")[0].value);
+    });
+}
+
+function addSubmitEventHandler() {
     var request;
     $("form#newArticle").submit(function(event) {
         displayStatus('Submitting...');
