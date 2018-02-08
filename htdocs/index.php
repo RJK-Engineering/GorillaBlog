@@ -1,5 +1,6 @@
 <?php
 
+require_once 'GorillaBlog.php';
 require_once 'GorillaBlogDb.php';
 
 $db = new GorillaBlogDb();
@@ -17,7 +18,7 @@ $db = new GorillaBlogDb();
 <body>
     <div class="container">
         <div class="row">
-             <div class="col-auto">
+            <div class="col-auto">
                 <h5 class="headerLeft">Menu</h5>
                 <div class="menu" id="mainMenu">
                     <div class="menuitem">Read Articles</div>
@@ -25,7 +26,7 @@ $db = new GorillaBlogDb();
                 </div>
                 <h5 class="headerLeft">Categories</h5>
                 <div class="filter-buttons">
-                    <?php PrintCategories($db) ?>
+                    <?php PrintCategories($db); ?>
                 </div>
             </div>
             <div class="col-6">
@@ -50,17 +51,6 @@ $db = new GorillaBlogDb();
 
 <?php
 
-function PrintCategories($db) {
-    echo '<ul>';
-    echo '<li class="filter-button" data-filter="article">All</li>';
-    foreach ($db->getCategories() as $category) {
-        echo '<li class="filter-button" data-filter=".';
-        echo GetCategoryClassName($category) . '">';
-        echo $category . '</li>';
-    }
-    echo '</ul>';
-}
-
 function PrintArticles($db) {
     foreach ($db->getArticles() as $article) {
         echo '<article id="article-' . $article['id'] . '" class="article';
@@ -72,10 +62,6 @@ function PrintArticles($db) {
         echo '<div class="blogtext">' . $article['text'] . '</div>';
         echo '</article>';
     }
-}
-
-function GetCategoryClassName($category) {
-    return preg_replace('/\s+/', '-', strtolower($category));
 }
 
 ?>
