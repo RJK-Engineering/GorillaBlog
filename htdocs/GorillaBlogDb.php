@@ -6,6 +6,10 @@ class GorillaBlogDb {
     private $articles = [];
     private $categories = [];
 
+    function __construct() {
+        $this->connect();
+    }
+
     function getArticles () {
         if (!count($this->articles)) $this->loadArticles();
         return $this->articles;
@@ -17,14 +21,12 @@ class GorillaBlogDb {
     }
 
     function loadArticles() {
-        $db = $this->connect();
-
         $sql = "select a.id, a.title, a.text, c.title category
                   from articles a
                   left join article_categories ac on ac.article_id = a.id
                   left join categories c on ac.category_id = c.id
                  order by a.id desc";
-        $statement = $db->prepare($sql);
+        $statement = $this->db->prepare($sql);
         $statement->execute();
 
         // build list of available categories and a list of categories for each article
@@ -54,10 +56,28 @@ class GorillaBlogDb {
         sort($this->categories);
     }
 
+    function insertArticle($title, $text) {
+        $sql = "insert into articles (title, text) values(:title, :text)";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':title', $title);
+        $statement->bindParam(':text', $text);
+        $statement->execute();
+    }
+
+    function updateArticle($id, $title, $text) {
+        $sql = "update articles set title=:title, text=:text where id=:id";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':title', $title);
+        $statement->bindParam(':text', $text);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+    }
+
+    function lastInsertId() {
+        return $this->db->lastInsertId();
+    }
+
     function connect() {
-        if ($this->db) {
-            return $this->db;
-        }
         $host = getenv('GORILLABLOG_DBSERVER');
         $name = getenv('GORILLABLOG_DBNAME');
         $user = getenv('GORILLABLOG_DBUSER');
