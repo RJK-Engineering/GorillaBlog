@@ -1,58 +1,61 @@
-// MooTools domready function
-window.addEvent('domready', function() {
-    addEvents();
-    loadCategoryInput(categoryUrl);
-});
-
 /* CONFIGURATION */
 var articleUrl = 'article.php';
 var categoryUrl = '../category.php';
 
-function addEvents() {
-    $$('#submitArticle').addEvents({
-        click: function() {
-            submitArticle();
-        }
-    });
-    $$('#newArticle').addEvents({
-        click: function() {
-            newArticle();
-        }
-    });
-}
-
-function submitArticle(id, title, text) {
-    var article = {
-        id: $$('#id').get('value'),
-        title: $$('#title').get('value'),
-        text: $$('#text').get('value'),
-        category: $$('#category').get('value')
-    };
-    submitArticleRequest.post(article);
-}
-
-function newArticle() {
-    $$('#id').set('value', '');
-    $$('#title').set('value', '');
-    $$('#text').set('value', '');
-    displayStatus('');
-}
-
-var submitArticleRequest = new Request.JSON({
-    url: articleUrl,
-    method: 'post',
-    onRequest: function() {
-        displayStatus('Submitting...');
-    },
-    onSuccess: function(id) {
-        displayStatus('Article stored succesfully');
-        $$('#id').set('value', id);
-    },
-    onFailure: function(request) {
-        displayStatus('Error submitting article, please try again');
-    }
+jQuery(function ($) {
+    addEvents();
 });
 
+function addEvents() {
+    var request;
+    $("form#newArticle").submit(function(event) {
+        displayStatus('Submitting...');
+
+        // Prevent default posting of form - put here to work in case of errors
+        event.preventDefault();
+        // Abort any pending request
+        if (request) {
+            request.abort();
+        }
+        // setup some local variables
+        var form = $(this);
+        // Let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        // Serialize the data in the form
+        var serializedData = form.serialize();
+
+        // Let's disable the inputs for the duration of the Ajax request.
+        // Note: we disable elements AFTER the form data has been serialized.
+        // Disabled form elements will not be serialized.
+        inputs.prop("disabled", true);
+
+        var idInput = $("form#newArticle")[0].id;
+        if (idInput.value) {
+            request = $.ajax({
+                url: articleUrl,
+                type: "post",
+                data: serializedData
+            });
+        } else {
+            request = $.ajax({
+                url: articleUrl,
+                type: "put",
+                data: serializedData
+            });
+        }
+
+        request.done(function (response, textStatus, jqXHR){
+            displayStatus('Article stored succesfully' + response.info);
+            idInput.value = response.id;
+        }).fail(function (jqXHR, textStatus, errorThrown){
+            displayStatus('Error submitting article: ' + textStatus);
+        }).always(function () {
+            // Reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    });
+}
+
 function displayStatus(text) {
-    $$('#status').set('text', text);
+    $('#status').text(text);
 }

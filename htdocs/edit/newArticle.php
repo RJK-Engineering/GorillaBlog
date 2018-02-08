@@ -27,23 +27,23 @@ $db = new GorillaBlogDb();
             </div>
             <div class="col-6">
                 <h1>Edit GorillaBlog Article</h1>
+                <form id="newArticle">
+                    <div class="input">
+                        <label for="title">Title:</label> <input type="text" name="title" id="title" required>
+                    </div>
+                    <div class="input">
+                        <label for="title">Category:</label> <div id="categoryInput"></div>
+                    </div>
+                    <div class="input">
+                        <textarea name="text" id="blogtext" required></textarea>
+                        <input type="hidden" name="id" id="id">
+                    </div>
 
-                <div class="input">
-                    <label for="title">Title:</label> <input type="text" name="title" id="title">
-                </div>
-                <div class="input">
-                    <label for="title">Category:</label> <div id="categoryInput"></div>
-                </div>
-                <div class="input">
-                    <textarea rows="20" cols="100" name="text" id="text"></textarea>
-                    <input type="hidden" name="id" id="id" value="0">
-                </div>
-
-                <div class="buttons">
-                    <button id="submitArticle">Submit</button>
-                </div>
-
-                <div id="status"></div>
+                    <div class="buttons">
+                        <input type="submit" id="submitArticleButton">
+                    </div>
+                    <div id="status"></div>
+                </form>
             </div>
         </div>
     </div>
@@ -54,6 +54,6 @@ $db = new GorillaBlogDb();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="main.js"></script>
+    <script src="newArticle.js"></script>
 </body>
 </html>
