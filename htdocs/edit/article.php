@@ -6,49 +6,25 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-Requested-With, X-Request');
 header('Content-Type: application/json');
 
-if (isset($_POST['title'][0], $_POST['text'][0], $_POST['category'][0])) {
-    if (isset($_POST['id'][0]) && $_POST['id'][0]) {
-        UpdateArticle($_POST['id'][0], $_POST['title'][0], $_POST['text'][0], $_POST['category'][0]);
-    } else {
-        WriteArticle($_POST['title'][0], $_POST['text'][0], $_POST['category'][0]);
-    }
+$db = new GorillaBlogDb();
+
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $put = GetRequestData();
+    $db->insertArticle($put['title'], $put['text']);
+    $response = [ 'id' => $db->lastInsertId() ];
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $db->updateArticle($_POST['id'], $_POST['title'], $_POST['text']);
+    $response = [ 'id' => $id ];
 } else {
     http_response_code(400);
     exit;
 }
 
-function UpdateArticle($id, $title, $text, $category) {
-    $db = DbConnect();
+echo json_encode($response);
 
-    $sql = "update articles set title=:title, text=:text where id=:id";
-    $statement = $db->prepare($sql);
-    $statement->bindParam(':title', $title);
-    $statement->bindParam(':text', $text);
-    $statement->bindParam(':id', $id);
-    $statement->execute();
-
-    echo $id;
-}
-
-function WriteArticle($title, $text, $category) {
-    $db = DbConnect();
-
-    $sql = "insert into articles (title, text) values(:title, :text)";
-    $statement = $db->prepare($sql);
-    $statement->bindParam(':title', $title);
-    $statement->bindParam(':text', $text);
-    $statement->execute();
-
-    $id = $db->lastInsertId();
-
-    $sql = "insert into article_categories (article_id, category_id)"
-        . " values(:art_id, (select id from categories where title=:cat_title))";
-    $statement = $db->prepare($sql);
-    $statement->bindParam(':art_id', $id);
-    $statement->bindParam(':cat_title', $category);
-    $statement->execute();
-
-    echo $id;
+function GetRequestData() {
+    parse_str(file_get_contents('php://input'), $data);
+    return $data;
 }
 
 ?>
