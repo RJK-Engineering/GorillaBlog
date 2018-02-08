@@ -1,7 +1,7 @@
 <?php
 
-require_once 'GorillaBlog.php';
-require_once 'GorillaBlogDb.php';
+require_once '../GorillaBlog.php';
+require_once '../GorillaBlogDb.php';
 
 $db = new GorillaBlogDb();
 
@@ -12,7 +12,7 @@ $db = new GorillaBlogDb();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GorillaBlog</title>
-    <link rel="stylesheet" href="GorillaBlog.css">
+    <link rel="stylesheet" href="../GorillaBlog.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
@@ -21,20 +21,30 @@ $db = new GorillaBlogDb();
             <div class="col-auto">
                 <h5 class="headerLeft">Menu</h5>
                 <div class="menu" id="mainMenu">
-                    <div class="menuitem">Read Articles</div>
-                    <div class="menuitem"><a href="edit/newArticle.php">New Article</a></div>
-                </div>
-                <h5 class="headerLeft">Categories</h5>
-                <div class="filter-buttons">
-                    <?php PrintCategories($db); ?>
+                    <div class="menuitem"><a href="..">Read Articles</a></div>
+                    <div class="menuitem">New Article</a></div>
                 </div>
             </div>
             <div class="col-6">
-                <h1>GorillaBlog Articles</h1>
+                <h1>Edit GorillaBlog Article</h1>
 
-                <div id="articles" class="grid">
-                    <?php PrintArticles($db) ?>
+                <div class="input">
+                    <label for="title">Title:</label> <input type="text" name="title" id="title">
                 </div>
+                <div class="input">
+                    <label for="title">Category:</label> <div id="categoryInput"></div>
+                </div>
+                <div class="input">
+                    <textarea rows="20" cols="100" name="text" id="text"></textarea>
+                    <input type="hidden" name="id" id="id" value="0">
+                </div>
+
+                <div class="buttons">
+                    <button id="submitArticle">Submit</button>
+                    <button id="newArticle">New Article</button>
+                </div>
+
+                <div id="status"></div>
             </div>
         </div>
     </div>
@@ -48,20 +58,3 @@ $db = new GorillaBlogDb();
     <script src="main.js"></script>
 </body>
 </html>
-
-<?php
-
-function PrintArticles($db) {
-    foreach ($db->getArticles() as $article) {
-        echo '<article id="article-' . $article['id'] . '" class="article';
-        foreach ($article['category'] as $category) {
-            echo ' ' . GetCategoryClassName($category);
-        }
-        echo ' grid-item">';
-        echo '<h3 class="title">' . $article['title'] . '</h3>';
-        echo '<div class="blogtext">' . $article['text'] . '</div>';
-        echo '</article>';
-    }
-}
-
-?>
