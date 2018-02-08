@@ -6,10 +6,34 @@ jQuery(function ($) {
     addSubmitEventHandler();
 });
 
+var selectedCategories = {};
+
 function addAddCategoryEventHandler() {
     $("#addCategory").on('click', null, function() {
-        alert($("#category")[0].value);
+        var elem = $("#category")[0];
+        var category = elem.value;
+        if (category && !selectedCategories[category]) {
+            addCategory(category);
+            elem.value = '';
+            selectedCategories[category] = 1;
+        }
+        return false; // do not submit form
     });
+}
+
+function addCategory(category) {
+    // add visible element
+    var span = $('<span />');
+    span.attr('class', 'selected-category');
+    span.html(category);
+    span.appendTo($('.category-selection'));
+
+    // add hidden input
+    var input = $('<input>');
+    input.attr('type', 'hidden');
+    input.attr('name', 'categories[]');
+    input.attr('value', category);
+    input.appendTo($("form#newArticle"));
 }
 
 function addSubmitEventHandler() {

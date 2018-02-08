@@ -11,10 +11,13 @@ $db = new GorillaBlogDb();
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $put = GetRequestData();
     $db->insertArticle($put['title'], $put['text']);
-    $response = [ 'id' => $db->lastInsertId() ];
+    $articleId = $db->lastInsertId();
+    $db->setCategories($articleId, $put['categories']);
+    $response = [ 'id' => $articleId ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db->updateArticle($_POST['id'], $_POST['title'], $_POST['text']);
-    $response = [ 'id' => $id ];
+    $db->setCategories($articleId, $_POST['categories']);
+    $response = [ 'id' => $_POST['id'] ];
 } else {
     http_response_code(400);
     exit;

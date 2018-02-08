@@ -31,14 +31,17 @@ $db = new GorillaBlogDb();
                     <div class="input">
                         <label for="title">Title:</label>
                         <input type="text" name="title" id="title" required>
+                        <!-- <input type="text" name="title" id="title"> -->
                     </div>
                     <div class="input">
                         <label for="title">Add Category:</label>
                         <div id="categoryInput"><?php PrintCategoryInput($db); ?></div>
                         <button id="addCategory">Add</button>
+                        <div class="category-selection"></div>
                     </div>
                     <div class="input">
                         <textarea name="text" id="blogtext" required></textarea>
+                        <!-- <textarea name="text" id="blogtext"></textarea> -->
                         <input type="hidden" name="id" id="id">
                     </div>
 

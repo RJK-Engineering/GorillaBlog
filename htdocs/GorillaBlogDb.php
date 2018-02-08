@@ -71,6 +71,17 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
+    function setCategories($articleId, $categories) {
+        foreach ($categories as $category) {
+            $sql = "insert into article_categories (article_id, category_id)" .
+                " values(:aid, (select id from categories where title=:cat))";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':aid', $articleId);
+            $statement->bindParam(':cat', $category);
+            $statement->execute();
+        }
+    }
+
     function getAllCategories() {
         $sql = "select * from categories";
         $statement = $this->db->prepare($sql);
