@@ -29,10 +29,13 @@ $db = new GorillaBlogDb();
                 <h1>Edit GorillaBlog Article</h1>
                 <form id="newArticle">
                     <div class="input">
-                        <label for="title">Title:</label> <input type="text" name="title" id="title" required>
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" id="title" required>
                     </div>
                     <div class="input">
-                        <label for="title">Category:</label> <div id="categoryInput"></div>
+                        <label for="title">Add Category:</label>
+                        <div id="categoryInput"><?php PrintCategoryInput($db); ?></div>
+                        <button id="addCategory">Add</button>
                     </div>
                     <div class="input">
                         <textarea name="text" id="blogtext" required></textarea>
@@ -57,3 +60,16 @@ $db = new GorillaBlogDb();
     <script src="newArticle.js"></script>
 </body>
 </html>
+
+<?php
+
+function PrintCategoryInput($db) {
+    echo '<input id="category" type="text" list="categories" name="category">';
+    echo '<datalist id="categories">';
+    foreach ($db->getAllCategories() as $category) {
+        echo '<option value="' . $category['title'] . '">';
+    };
+    echo '</datalist>';
+}
+
+?>

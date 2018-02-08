@@ -73,7 +73,7 @@ class GorillaBlogDb {
 
     function getAllCategories() {
         $sql = "select * from categories";
-        $statement = $db->prepare($sql);
+        $statement = $this->db->prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
