@@ -10,6 +10,11 @@
     display: inline;
 }
 
+textarea#blogtext {
+    width: 100%;
+    height: 200px;
+}
+
 label {
     font-weight: bold;
 }
