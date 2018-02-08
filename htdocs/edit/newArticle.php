@@ -35,7 +35,7 @@ $db = new GorillaBlogDb();
                         <!-- <input type="text" name="title" id="title"> -->
                     </div>
                     <div class="input">
-                        <label for="title">Add Category:</label>
+                        <label for="title">Category:</label>
                         <div id="categoryInput"><?php PrintCategoryInput($db); ?></div>
                         <button id="addCategory">Add</button>
                         <div class="category-selection"></div>
@@ -48,7 +48,8 @@ $db = new GorillaBlogDb();
 
                     <div class="buttons">
                         <input type="submit" id="submitArticleButton">
-                        <button id="openHelp">Formatting Help</button>
+                        <button id="openFormattingHelp">Formatting Help</button>
+                        <button id="openExpanderHelp">Text Expander Help</button>
                     </div>
                     <div id="status"></div>
                 </form>
@@ -59,9 +60,12 @@ $db = new GorillaBlogDb();
     <hr>
     <div>Sources available on <a href="https://github.com/RJK-Engineering/GorillaBlog">GitHub</a></div>
 
-    <div id="formattingHelp" title="Formatting Help">
+    <div class="dialog" id="formattingHelp" title="Formatting Help">
         <p>*Bold* = <b>Bold</b></p>
         <p>_Italic_ = <i>Italic</i></p>
+    </div>
+
+    <div class="dialog" id="expanderHelp" title="Text Expander Help">
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

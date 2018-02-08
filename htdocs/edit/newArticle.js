@@ -1,31 +1,26 @@
 /* CONFIGURATION */
 var articleUrl = 'article.php';
+var textExpanderConf = {
+    "cg" : "CodeGorilla",
+    "gn" : "Groningen"
+};
 
 jQuery(function ($) {
     addAddCategoryEventHandler();
     addSubmitEventHandler();
-    setupHelpDialog();
+    setupHelpDialogs();
+    setupTextExpander();
 });
-
-function setupHelpDialog(argument) {
-    $("#formattingHelp").dialog({
-        autoOpen: false
-    });
-    $("#openHelp").on("click", function() {
-        $("#formattingHelp").dialog("open");
-        return false;
-    });
-}
 
 var selectedCategories = {};
 
 function addAddCategoryEventHandler() {
     $("#addCategory").on('click', function() {
-        var elem = $("#category")[0];
-        var category = elem.value;
+        var categoryElem = $("#category")[0];
+        var category = categoryElem.value;
         if (category && !selectedCategories[category]) {
             addCategory(category);
-            elem.value = '';
+            categoryElem.value = '';
             selectedCategories[category] = 1;
         }
         return false; // do not submit form
@@ -70,8 +65,8 @@ function addSubmitEventHandler() {
         // Disabled form elements will not be serialized.
         inputs.prop("disabled", true);
 
-        var idInput = $("form#newArticle")[0].id;
-        if (idInput.value) {
+        var idElem = $("form#newArticle")[0].id;
+        if (idElem.value) {
             request = $.ajax({
                 url: articleUrl,
                 type: "post",
@@ -86,14 +81,49 @@ function addSubmitEventHandler() {
         }
 
         request.done(function (response, textStatus, jqXHR){
-            displayStatus('Article stored succesfully' + response.info);
-            idInput.value = response.id;
+            displayStatus('Article stored succesfully');
+            idElem.value = response.id;
         }).fail(function (jqXHR, textStatus, errorThrown){
             displayStatus('Error submitting article: ' + textStatus);
         }).always(function () {
             // Reenable the inputs
             inputs.prop("disabled", false);
         });
+    });
+}
+
+function setupHelpDialogs() {
+    $("#formattingHelp").dialog({ autoOpen: false });
+    $("#openFormattingHelp").on("click", function() {
+        $("#formattingHelp").dialog("open");
+        return false;
+    });
+
+    $("#expanderHelp").dialog({ autoOpen: false });
+    $("#openExpanderHelp").on("click", function() {
+        $("#expanderHelp").dialog("open");
+        return false;
+    });
+    var help = '';
+    $.each(textExpanderConf, function(abbrev, expanded) {
+        help += abbrev + ': ' + expanded + '<br>';
+    });
+    $("#expanderHelp").html(help);
+}
+
+function setupTextExpander() {
+    var textElem = $("#blogtext");
+    var re = new RegExp("\\b(" + Object.keys(textExpanderConf).join("|") + ")\\b", "g");
+    var updateBlogText = function() {
+        textElem[0].value = textElem[0].value.replace(re, function($0, $1) {
+            return textExpanderConf[$1.toLowerCase()];
+        });
+    };
+
+    var timer = 0;
+    textElem.on('keydown', function() {
+        clearTimeout(timer);
+        timer = setTimeout(updateBlogText, 200);
     });
 }
 
