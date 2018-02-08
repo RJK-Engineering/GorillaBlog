@@ -22,7 +22,7 @@ $db = new GorillaBlogDb();
                 <h5 class="headerLeft">Menu</h5>
                 <div class="menu" id="mainMenu">
                     <div class="menuitem"><a href="..">Read Articles</a></div>
-                    <div class="menuitem">New Article</a></div>
+                    <div class="menuitem">New Article</div>
                 </div>
             </div>
             <div class="col-6">
@@ -41,7 +41,6 @@ $db = new GorillaBlogDb();
 
                 <div class="buttons">
                     <button id="submitArticle">Submit</button>
-                    <button id="newArticle">New Article</button>
                 </div>
 
                 <div id="status"></div>
