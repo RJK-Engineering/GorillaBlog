@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `gorillablog`.`article_categories` (
   CONSTRAINT `fk_articles_has_categories_articles`
     FOREIGN KEY (`article_id`)
     REFERENCES `gorillablog`.`articles` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_articles_has_categories_categories1`
     FOREIGN KEY (`category_id`)
