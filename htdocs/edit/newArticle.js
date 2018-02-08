@@ -1,6 +1,5 @@
 /* CONFIGURATION */
 var articleUrl = 'article.php';
-var categoryUrl = '../category.php';
 
 jQuery(function ($) {
     addEvents();

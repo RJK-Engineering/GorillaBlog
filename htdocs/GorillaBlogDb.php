@@ -35,10 +35,8 @@ class GorillaBlogDb {
         foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $currId = $row['id'];
             if ($currId == $prevId) {
-                if ($row['category']) {
-                    array_push($this->articles[$currId]['category'], $row['category']);
-                    $categoryIndex[$row['category']] = 1;
-                }
+                array_push($this->articles[$currId]['category'], $row['category']);
+                $categoryIndex[$row['category']] = 1;
             } else {
                 if ($row['category']) {
                     $category = $row['category'];
@@ -71,6 +69,13 @@ class GorillaBlogDb {
         $statement->bindParam(':text', $text);
         $statement->bindParam(':id', $id);
         $statement->execute();
+    }
+
+    function getAllCategories() {
+        $sql = "select * from categories";
+        $statement = $db->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function lastInsertId() {
