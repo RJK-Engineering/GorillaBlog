@@ -4,12 +4,23 @@ var articleUrl = 'article.php';
 jQuery(function ($) {
     addAddCategoryEventHandler();
     addSubmitEventHandler();
+    setupHelpDialog();
 });
+
+function setupHelpDialog(argument) {
+    $("#formattingHelp").dialog({
+        autoOpen: false
+    });
+    $("#openHelp").on("click", function() {
+        $("#formattingHelp").dialog("open");
+        return false;
+    });
+}
 
 var selectedCategories = {};
 
 function addAddCategoryEventHandler() {
-    $("#addCategory").on('click', null, function() {
+    $("#addCategory").on('click', function() {
         var elem = $("#category")[0];
         var category = elem.value;
         if (category && !selectedCategories[category]) {

@@ -13,6 +13,7 @@ $db = new GorillaBlogDb();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GorillaBlog</title>
     <link rel="stylesheet" href="../GorillaBlog.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
@@ -47,6 +48,7 @@ $db = new GorillaBlogDb();
 
                     <div class="buttons">
                         <input type="submit" id="submitArticleButton">
+                        <button id="openHelp">Formatting Help</button>
                     </div>
                     <div id="status"></div>
                 </form>
@@ -57,7 +59,13 @@ $db = new GorillaBlogDb();
     <hr>
     <div>Sources available on <a href="https://github.com/RJK-Engineering/GorillaBlog">GitHub</a></div>
 
+    <div id="formattingHelp" title="Formatting Help">
+        <p>*Bold* = <b>Bold</b></p>
+        <p>_Italic_ = <i>Italic</i></p>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="newArticle.js"></script>
