@@ -18,10 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $put = GetRequestData();
-    $db->insertArticle($put['title'], $put['text']);
-    $articleId = $db->lastInsertId();
-    $db->setCategories($articleId, $put['categories']);
-    $response = [ 'id' => $articleId ];
+    $db->insertComment($put['articleId'], $put['comment']);
+    $commentId = $db->lastInsertId();
+    $response = [ 'id' => $commentId ];
 } else {
     http_response_code(400);
     exit;
