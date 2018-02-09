@@ -58,10 +58,22 @@ function PrintArticles($db) {
             echo ' ' . GetCategoryClassName($category);
         }
         echo ' grid-item">';
+
         echo '<h3 class="title">' . $article['title'] . '</h3>';
         echo '<div class="blogtext">' . $article['text'] . '</div>';
+
+        PrintCommentForm($article['id']);
+
         echo '</article>';
     }
+}
+
+function PrintCommentForm($articleId) {
+    echo '<form method="post" onsubmit="return false;">';
+    echo '<textarea name="comment"></textarea><br>';
+    echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
+    echo '<button>Add Comment</button>';
+    echo '</form>';
 }
 
 ?>
