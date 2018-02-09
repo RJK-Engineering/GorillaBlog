@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $response = [ 'id' => $commentId ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     $reqData = GetRequestData();
-    $db->insertComment($reqData['commentId']);
+    $db->deleteComment($reqData['commentId']);
     $response = [ 'id' => $reqData['commentId'] ];
 } else {
     http_response_code(400);

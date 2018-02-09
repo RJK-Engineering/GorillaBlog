@@ -36,7 +36,7 @@ function addEventHandlers() {
 }
 
 function loadComments() {
-    request = $.ajax({
+    $.ajax({
         url: commentsUrl,
         type: 'get'
     }).done(function (response) {
@@ -59,4 +59,14 @@ function setComments(elem, comments) {
 
 function addComment(articleId, comment) {
     $('#comments-'+articleId).append('<div>' + comment + '</div>');
+}
+
+function deleteComment(commentId) {
+    $.ajax({
+        url: commentsUrl,
+        type: 'delete',
+        data: 'commentId=' + commentId
+    }).done(function (response) {
+        alert(JSON.stringify(response));
+    });
 }
