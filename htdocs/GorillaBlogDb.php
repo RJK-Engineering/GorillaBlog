@@ -105,6 +105,15 @@ class GorillaBlogDb {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function insertComment($articleId, $comment) {
+        $sql = "insert into comments (article_id, comment)
+            values(:aid, :comment)";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':aid', $articleId);
+        $statement->bindParam(':comment', $comment);
+        $statement->execute();
+    }
+
     public function lastInsertId() {
         return $this->db->lastInsertId();
     }
