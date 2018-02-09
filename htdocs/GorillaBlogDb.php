@@ -122,6 +122,13 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
+    public function deleteComment($commentId) {
+        $sql = "delete from comments where id=:cid";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':cid', $commentId);
+        $statement->execute();
+    }
+
     public function lastInsertId() {
         return $this->db->lastInsertId();
     }

@@ -12,10 +12,14 @@ $db = new GorillaBlogDb();
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $response = [ 'comments' => $db->getComments() ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    $put = GetRequestData();
-    $db->insertComment($put['articleId'], $put['comment']);
+    $reqData = GetRequestData();
+    $db->insertComment($reqData['articleId'], $reqData['comment']);
     $commentId = $db->lastInsertId();
     $response = [ 'id' => $commentId ];
+} elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    $reqData = GetRequestData();
+    $db->insertComment($reqData['commentId']);
+    $response = [ 'id' => $reqData['commentId'] ];
 } else {
     http_response_code(400);
     exit;
