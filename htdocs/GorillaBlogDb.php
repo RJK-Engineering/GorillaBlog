@@ -94,15 +94,23 @@ class GorillaBlogDb {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getComments($articleId) {
+    public function getComments() {
         $sql = "select *
                   from comments
-                 where article_id=:aid
                  order by id desc";
         $statement = $this->db->prepare($sql);
-        $statement->bindParam(':aid', $articleId);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // create array of comments per article
+        $comments = [];
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            if (!isset($comments[$row['article_id']])) {
+                $comments[$row['article_id']] = [];
+            }
+            array_push($comments[$row['article_id']], $row['comment']);
+        }
+
+        return $comments;
     }
 
     public function insertComment($articleId, $comment) {

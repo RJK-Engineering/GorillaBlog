@@ -3,6 +3,7 @@ var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
     addEventHandlers();
+    loadComments();
 });
 
 function addEventHandlers() {
@@ -22,13 +23,40 @@ function addEventHandlers() {
             url: commentsUrl,
             type: 'put',
             data: serializedData
-        }).done(function (response, textStatus, jqXHR){
-            // idElem.value = response.id;
-        }).fail(function (jqXHR, textStatus, errorThrown){
+        }).done(function () {
+            addComment(form[0].articleId.value, form[0].comment.value);
+            form[0].comment.value = '';
+        }).fail(function () {
             alert('Error submitting comment');
         }).always(function () {
             // reenable inputs
             inputs.prop("disabled", false);
         });
     });
+}
+
+function loadComments() {
+    request = $.ajax({
+        url: commentsUrl,
+        type: 'get'
+    }).done(function (response) {
+        $.each($(".comment-section"), function() {
+            var articleId = $(this).attr('data-article-id');
+            if (response.comments[articleId]) {
+                setComments($(this), response.comments[articleId]);
+            }
+        });
+    });
+}
+
+function setComments(elem, comments) {
+    var html = '';
+    $.each(comments, function(i, comment) {
+        html += '<div>' + comment + '</div>';
+    });
+    elem.html(html);
+}
+
+function addComment(articleId, comment) {
+    $('#comments-'+articleId).append('<div>' + comment + '</div>');
 }

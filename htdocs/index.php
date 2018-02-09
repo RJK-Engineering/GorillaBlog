@@ -45,8 +45,9 @@ $db = new GorillaBlogDb();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="comments.js"></script>
+
     <script src="main.js"></script>
+    <script src="comments.js"></script>
 </body>
 </html>
 
@@ -60,14 +61,17 @@ function PrintArticles($db) {
         }
         echo ' grid-item">';
 
-        echo '<h3 class="title">' . $article['title'] . '</h3>';
-        echo '<div class="blogtext">' . $article['text'] . '</div>';
-
+        PrintBlogText($article);
         PrintCommentForm($article['id']);
-        echo '<div class="comment-section"></div>';
+        PrintCommentSection($article['id']);
 
         echo '</article>';
     }
+}
+
+function PrintBlogText($article) {
+    echo '<h3 class="title">' . $article['title'] . '</h3>';
+    echo '<div class="blogtext">' . $article['text'] . '</div>';
 }
 
 function PrintCommentForm($articleId) {
@@ -76,6 +80,10 @@ function PrintCommentForm($articleId) {
     echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
     echo '<button>Add Comment</button>';
     echo '</form>';
+}
+
+function PrintCommentSection($articleId) {
+    echo '<div id="comments-' . $articleId , '" class="comment-section" data-article-id="' . $articleId . '"></div>';
 }
 
 ?>
