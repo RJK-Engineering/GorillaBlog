@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $response = [ 'id' => $articleId ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db->updateArticle($_POST['id'], $_POST['title'], $_POST['text']);
-    $db->setCategories($articleId, $_POST['categories']);
+    $db->setCategories($_POST['id'], $_POST['categories']);
     $response = [ 'id' => $_POST['id'] ];
 } else {
     http_response_code(400);
