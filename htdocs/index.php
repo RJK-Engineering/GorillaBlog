@@ -33,7 +33,7 @@ $db = new GorillaBlogDb();
                 <h1>GorillaBlog Articles</h1>
 
                 <div id="articles" class="grid">
-                    <?php PrintArticles($db) ?>
+                    <?php PrintArticles($db); ?>
                 </div>
             </div>
         </div>

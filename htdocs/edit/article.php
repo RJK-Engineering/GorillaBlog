@@ -12,7 +12,7 @@ $db = new GorillaBlogDb();
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $reqData = GetRequestData();
 
-    $db->insertArticle($reqData['title'], $reqData['text']);
+    $db->insertArticle($reqData['title'], FormatText($reqData['text']));
     $articleId = $db->lastInsertId();
 
     $categories = isset($reqData['categories']) ? $reqData['categories'] : [];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     $response = [ 'id' => $articleId ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $db->updateArticle($_POST['id'], $_POST['title'], $_POST['text']);
+    $db->updateArticle($_POST['id'], $_POST['title'], FormatText($_POST['text']));
 
     $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
     $db->setCategories($_POST['id'], $categories);
@@ -32,5 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 }
 
 echo json_encode($response);
+
+function FormatText($text) {
+    $formatted = preg_replace('/\n\r?\n\r?/', '</p><p>', $text);
+    $formatted = '<p>' . $formatted . '</p>';
+    $formatted = preg_replace('/\*(.+?)\*/', '<b>$1</b>', $formatted);
+    $formatted = preg_replace('/_(.+?)_/', '<i>$1</i>', $formatted);
+    return $formatted;
+}
 
 ?>
