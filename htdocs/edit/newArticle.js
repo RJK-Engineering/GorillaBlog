@@ -66,24 +66,16 @@ function addSubmitEventHandler() {
         inputs.prop("disabled", true);
 
         var idElem = $("form#newArticle")[0].id;
-        if (idElem.value) {
-            request = $.ajax({
-                url: articleUrl,
-                type: "post",
-                data: serializedData
-            });
-        } else {
-            request = $.ajax({
-                url: articleUrl,
-                type: "put",
-                data: serializedData
-            });
-        }
+        var method = idElem.value ? "post" : "put";
 
-        request.done(function (response, textStatus, jqXHR){
+        request = $.ajax({
+            url: articleUrl,
+            type: method,
+            data: serializedData
+        }).done(function (response, textStatus, jqXHR) {
             displayStatus('Article stored succesfully');
             idElem.value = response.id;
-        }).fail(function (jqXHR, textStatus, errorThrown){
+        }).fail(function (jqXHR, textStatus, errorThrown) {
             displayStatus('Error submitting article: ' + textStatus);
         }).always(function () {
             // Reenable the inputs
