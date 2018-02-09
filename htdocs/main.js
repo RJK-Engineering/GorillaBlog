@@ -1,8 +1,5 @@
 jQuery(function ($) {
-    // set isotope grid
-    $('.grid').isotope({
-        itemSelector: '.grid-item',
-    });
+    initGrid();
 
     // filter items on button click
     $('.filter-buttons').on('click', '.filter-button', function() {
@@ -10,3 +7,9 @@ jQuery(function ($) {
         $('#articles').isotope({ filter: filterValue });
     });
 });
+
+function initGrid() {
+    $('.grid').isotope({
+        itemSelector: '.grid-item',
+    });
+}

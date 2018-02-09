@@ -2,11 +2,11 @@
 var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
-    addEventHandlers();
+    addOnsubmitEventHandlers();
     loadComments();
 });
 
-function addEventHandlers() {
+function addOnsubmitEventHandlers() {
     var request;
     $("form.comment-form").submit(function(event) {
         event.preventDefault();
@@ -55,10 +55,13 @@ function setComments(elem, comments) {
         html += '<div>' + comment + '</div>';
     });
     elem.html(html);
+    initGrid();
 }
 
 function addComment(articleId, comment) {
-    $('#comments-'+articleId).append('<div>' + comment + '</div>');
+    var div = $('<div>' + comment + '</div>');
+    div.appendTo($('#comments-'+articleId));
+    initGrid();
 }
 
 function deleteComment(commentId) {
