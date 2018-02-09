@@ -6,21 +6,21 @@ class GorillaBlogDb {
     private $articles = [];
     private $categories = [];
 
-    function __construct() {
+    public function __construct() {
         $this->connect();
     }
 
-    function getArticles () {
+    public function getArticles () {
         if (!count($this->articles)) $this->loadArticles();
         return $this->articles;
     }
 
-    function getCategories () {
+    public function getCategories () {
         if (!count($this->articles)) $this->loadArticles();
         return $this->categories;
     }
 
-    function loadArticles() {
+    private function loadArticles() {
         $sql = "select a.id, a.title, a.text, c.title category
                   from articles a
                   left join article_categories ac on ac.article_id = a.id
@@ -54,7 +54,7 @@ class GorillaBlogDb {
         sort($this->categories);
     }
 
-    function insertArticle($title, $text) {
+    public function insertArticle($title, $text) {
         $sql = "insert into articles (title, text) values(:title, :text)";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(':title', $title);
@@ -62,7 +62,7 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
-    function updateArticle($id, $title, $text) {
+    public function updateArticle($id, $title, $text) {
         $sql = "update articles set title=:title, text=:text where id=:id";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(':title', $title);
@@ -71,7 +71,7 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
-    function setCategories($articleId, $categories) {
+    public function setCategories($articleId, $categories) {
         foreach ($categories as $category) {
             $sql = "insert into article_categories (article_id, category_id)" .
                 " values(:aid, (select id from categories where title=:cat))";
@@ -82,18 +82,18 @@ class GorillaBlogDb {
         }
     }
 
-    function getAllCategories() {
-        $sql = "select * from categories";
+    public function getAllCategories() {
+        $sql = "select * from categories order by title";
         $statement = $this->db->prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function lastInsertId() {
+    public function lastInsertId() {
         return $this->db->lastInsertId();
     }
 
-    function connect() {
+    private function connect() {
         $host = getenv('GORILLABLOG_DBSERVER');
         $name = getenv('GORILLABLOG_DBNAME');
         $user = getenv('GORILLABLOG_DBUSER');
@@ -102,7 +102,7 @@ class GorillaBlogDb {
         return $this->db = new PDO("mysql:host=$host;dbname=$name", $user, $pass);
     }
 
-    function __toString() {
+    public function __toString() {
         try {
             if ($this->db) {
                 $errorInfo = $this->db->errorInfo()[2];
