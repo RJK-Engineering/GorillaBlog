@@ -10,12 +10,12 @@ header('Content-Type: application/json');
 $db = new GorillaBlogDb();
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    $put = GetRequestData();
+    $reqData = GetRequestData();
 
-    $db->insertArticle($put['title'], $put['text']);
+    $db->insertArticle($reqData['title'], $reqData['text']);
     $articleId = $db->lastInsertId();
 
-    $categories = isset($put['categories']) ? $put['categories'] : [];
+    $categories = isset($reqData['categories']) ? $reqData['categories'] : [];
     $db->setCategories($articleId, $categories);
 
     $response = [ 'id' => $articleId ];

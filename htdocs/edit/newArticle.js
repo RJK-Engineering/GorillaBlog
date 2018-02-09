@@ -50,9 +50,8 @@ function addSubmitEventHandler() {
         // Prevent default posting of form - put here to work in case of errors
         event.preventDefault();
         // Abort any pending request
-        if (request) {
-            request.abort();
-        }
+        if (request)  request.abort();
+
         // setup some local variables
         var form = $(this);
         // Let's select and cache all the fields
