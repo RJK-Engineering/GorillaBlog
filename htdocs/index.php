@@ -45,6 +45,7 @@ $db = new GorillaBlogDb();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="comments.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
@@ -63,14 +64,15 @@ function PrintArticles($db) {
         echo '<div class="blogtext">' . $article['text'] . '</div>';
 
         PrintCommentForm($article['id']);
+        echo '<div class="comment-section"></div>';
 
         echo '</article>';
     }
 }
 
 function PrintCommentForm($articleId) {
-    echo '<form method="post" onsubmit="return false;">';
-    echo '<textarea name="comment"></textarea><br>';
+    echo '<form class="comment-form">';
+    echo '<textarea name="comment" required></textarea><br>';
     echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
     echo '<button>Add Comment</button>';
     echo '</form>';
