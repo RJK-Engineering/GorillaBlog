@@ -47,21 +47,14 @@ function addSubmitEventHandler() {
     $("form#newArticle").submit(function(event) {
         displayStatus('Submitting...');
 
-        // Prevent default posting of form - put here to work in case of errors
         event.preventDefault();
-        // Abort any pending request
         if (request)  request.abort();
 
-        // setup some local variables
         var form = $(this);
-        // Let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-        // Serialize the data in the form
         var serializedData = form.serialize();
 
-        // Let's disable the inputs for the duration of the Ajax request.
-        // Note: we disable elements AFTER the form data has been serialized.
-        // Disabled form elements will not be serialized.
+        // disable inputs while waiting for response
         inputs.prop("disabled", true);
 
         var idElem = $("form#newArticle")[0].id;
@@ -71,13 +64,13 @@ function addSubmitEventHandler() {
             url: articleUrl,
             type: method,
             data: serializedData
-        }).done(function (response, textStatus, jqXHR) {
+        }).done(function (response) {
             displayStatus('Article stored succesfully');
             idElem.value = response.id;
-        }).fail(function (jqXHR, textStatus, errorThrown) {
+        }).fail(function (jqXHR, textStatus) {
             displayStatus('Error submitting article: ' + textStatus);
         }).always(function () {
-            // Reenable the inputs
+            // reenable inputs
             inputs.prop("disabled", false);
         });
     });
