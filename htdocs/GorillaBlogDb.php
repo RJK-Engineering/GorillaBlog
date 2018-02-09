@@ -55,7 +55,8 @@ class GorillaBlogDb {
     }
 
     public function insertArticle($title, $text) {
-        $sql = "insert into articles (title, text) values(:title, :text)";
+        $sql = "insert into articles (title, text)
+            values(:title, :text)";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(':title', $title);
         $statement->bindParam(':text', $text);
@@ -63,7 +64,9 @@ class GorillaBlogDb {
     }
 
     public function updateArticle($id, $title, $text) {
-        $sql = "update articles set title=:title, text=:text where id=:id";
+        $sql = "update articles
+                   set title=:title, text=:text
+                 where id=:id";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(':title', $title);
         $statement->bindParam(':text', $text);
@@ -73,8 +76,8 @@ class GorillaBlogDb {
 
     public function setCategories($articleId, $categories) {
         foreach ($categories as $category) {
-            $sql = "insert into article_categories (article_id, category_id)" .
-                " values(:aid, (select id from categories where title=:cat))";
+            $sql = "insert into article_categories (article_id, category_id)
+                values(:aid, (select id from categories where title=:cat))";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':aid', $articleId);
             $statement->bindParam(':cat', $category);
@@ -83,8 +86,21 @@ class GorillaBlogDb {
     }
 
     public function getAllCategories() {
-        $sql = "select * from categories order by title";
+        $sql = "select *
+                  from categories
+                 order by title";
         $statement = $this->db->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getComments($articleId) {
+        $sql = "select *
+                  from comments
+                 where article_id=:aid
+                 order by id desc";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':aid', $articleId);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
