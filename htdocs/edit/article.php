@@ -1,6 +1,7 @@
 <?php
 
 require_once('../GorillaBlogDb.php');
+require_once('../GetRequestData.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-Requested-With, X-Request');
@@ -24,10 +25,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 }
 
 echo json_encode($response);
-
-function GetRequestData() {
-    parse_str(file_get_contents('php://input'), $data);
-    return $data;
-}
 
 ?>
