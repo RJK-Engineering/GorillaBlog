@@ -2,7 +2,7 @@
 
 function PrintCategories($db) {
     echo '<ul>';
-    echo '<li class="filter-button" data-filter="article">All</li>';
+    echo '<li class="filter-button" data-filter=".article">All</li>';
     foreach ($db->getCategories() as $category) {
         echo '<li class="filter-button" data-filter=".';
         echo GetCategoryClassName($category) . '">';

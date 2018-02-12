@@ -19,19 +19,18 @@ $db = new GorillaBlogDb();
     <div class="container">
         <div class="row">
             <div class="col-auto">
-                <h5 class="headerLeft">Menu</h5>
-                <div class="menu" id="mainMenu">
-                    <div class="menuitem">Read Articles</div>
-                    <div class="menuitem"><a href="edit/newArticle.php">New Article</a></div>
+                <h5 class="header-left">Menu</h5>
+                <div>
+                    <div>Read Articles</div>
+                    <div><a href="edit/newArticle.php">New Article</a></div>
                 </div>
-                <h5 class="headerLeft">Categories</h5>
+                <h5 class="header-left">Categories</h5>
                 <div class="filter-buttons">
                     <?php PrintCategories($db); ?>
                 </div>
             </div>
             <div class="col-6">
                 <h1>GorillaBlog Articles</h1>
-
                 <div id="articles" class="grid">
                     <?php PrintArticles($db); ?>
                 </div>
@@ -42,11 +41,13 @@ $db = new GorillaBlogDb();
     <hr>
     <div>Sources available on <a href="https://github.com/RJK-Engineering/GorillaBlog">GitHub</a></div>
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script src="main.js"></script>
+    <script src="autosize.min.js"></script>
+    <script src="index.js"></script>
     <script src="comments.js"></script>
 </body>
 </html>
@@ -55,23 +56,29 @@ $db = new GorillaBlogDb();
 
 function PrintArticles($db) {
     foreach ($db->getArticles() as $article) {
-        echo '<article id="article-' . $article['id'] . '" class="article';
+        echo '<div class="article';
         foreach ($article['category'] as $category) {
             echo ' ' . GetCategoryClassName($category);
         }
         echo ' grid-item">';
 
-        PrintBlogText($article);
+        echo '<div class="content">';
+        PrintArticle($article);
         PrintCommentForm($article['id']);
         PrintCommentSection($article['id']);
+        echo '</div>';
 
-        echo '</article>';
+        echo '<div class="show-more">Read more</div>';
+
+        echo '</div>';
     }
 }
 
-function PrintBlogText($article) {
-    echo '<h3 class="title">' . $article['title'] . '</h3>';
-    echo '<div class="blogtext">' . $article['text'] . '</div>';
+function PrintArticle($article) {
+    echo '<article>';
+    echo '<h3>' . $article['title'] . '</h3>';
+    echo '<p>' . $article['text'] . '</p>';
+    echo '</article>';
 }
 
 function PrintCommentForm($articleId) {
@@ -83,7 +90,8 @@ function PrintCommentForm($articleId) {
 }
 
 function PrintCommentSection($articleId) {
-    echo '<div id="comments-' . $articleId , '" class="comment-section" data-article-id="' . $articleId . '"></div>';
+    echo '<div id="comments-' . $articleId .
+        '" class="comment-section" data-article-id="' . $articleId . '"></div>';
 }
 
 ?>

@@ -20,38 +20,61 @@ $db = new GorillaBlogDb();
     <div class="container">
         <div class="row">
             <div class="col-auto">
-                <h5 class="headerLeft">Menu</h5>
-                <div class="menu" id="mainMenu">
-                    <div class="menuitem"><a href="..">Read Articles</a></div>
-                    <div class="menuitem">New Article</div>
+                <h5 class="header-left">Menu</h5>
+                <div>
+                    <div><a href="..">Read Articles</a></div>
+                    <div>New Article</div>
                 </div>
             </div>
             <div class="col-6">
-                <h1>Edit GorillaBlog Article</h1>
                 <form id="newArticle">
-                    <div class="input">
-                        <label for="title">Title:</label>
-                        <input type="text" name="title" id="title" required>
-                        <!-- <input type="text" name="title" id="title"> -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h1>Edit GorillaBlog Article</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="title">Title:</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="title" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <label for="title">Categories:</label>
+                            </div>
+                            <div class="col">
+                                <?php PrintCategoryInput($db); ?>
+                                <button id="addCategory">Add</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="category-selection"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea name="text" class="blogtext" required></textarea>
+                                <input type="hidden" name="id">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button id="openFormattingHelp">Formatting Help</button>
+                                <button id="openExpanderHelp">Text Expander Help</button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" id="submitArticleButton">Submit</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" id="status">
+                        </div>
                     </div>
-                    <div class="input">
-                        <label for="title">Category:</label>
-                        <div id="categoryInput"><?php PrintCategoryInput($db); ?></div>
-                        <button id="addCategory">Add</button>
-                        <div class="category-selection"></div>
-                    </div>
-                    <div class="input">
-                        <textarea name="text" id="blogtext" required></textarea>
-                        <!-- <textarea name="text" id="blogtext"></textarea> -->
-                        <input type="hidden" name="id" id="id">
-                    </div>
-
-                    <div class="buttons">
-                        <input type="submit" id="submitArticleButton">
-                        <button id="openFormattingHelp">Formatting Help</button>
-                        <button id="openExpanderHelp">Text Expander Help</button>
-                    </div>
-                    <div id="status"></div>
                 </form>
             </div>
         </div>
@@ -72,6 +95,9 @@ $db = new GorillaBlogDb();
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="../autosize.min.js"></script>
+    <script src="text-expander.js"></script>
     <script src="newArticle.js"></script>
 </body>
 </html>

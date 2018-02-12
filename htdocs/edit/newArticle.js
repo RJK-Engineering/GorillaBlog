@@ -9,8 +9,13 @@ jQuery(function ($) {
     addAddCategoryEventHandler();
     addSubmitEventHandler();
     setupHelpDialogs();
-    setupTextExpander();
+    setupTextExpander(".blogtext", textExpanderConf);
+    setupAutosize();
 });
+
+function setupAutosize() {
+    autosize($("textarea"));
+}
 
 var selectedCategories = {};
 
@@ -48,7 +53,7 @@ function addSubmitEventHandler() {
         displayStatus('Submitting...');
 
         event.preventDefault();
-        if (request)  request.abort();
+        if (request) request.abort();
 
         var form = $(this);
         var inputs = form.find("input, select, button, textarea");
@@ -93,22 +98,6 @@ function setupHelpDialogs() {
         help += abbrev + ': ' + expanded + '<br>';
     });
     $("#expanderHelp").html(help);
-}
-
-function setupTextExpander() {
-    var textElem = $("#blogtext");
-    var re = new RegExp("\\b(" + Object.keys(textExpanderConf).join("|") + ")\\b", "g");
-    var updateBlogText = function() {
-        textElem[0].value = textElem[0].value.replace(re, function($0, $1) {
-            return textExpanderConf[$1.toLowerCase()];
-        });
-    };
-
-    var timer = 0;
-    textElem.on('keydown', function() {
-        clearTimeout(timer);
-        timer = setTimeout(updateBlogText, 200);
-    });
 }
 
 function displayStatus(text) {

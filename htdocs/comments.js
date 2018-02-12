@@ -3,8 +3,16 @@ var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
     addOnsubmitEventHandlers();
+    setupAutosize();
     loadComments();
 });
+
+function setupAutosize() {
+    autosize($("textarea"));
+    addEventListener('autosize:resized', function() {
+        layout();
+    });
+}
 
 function addOnsubmitEventHandlers() {
     var request;
@@ -55,13 +63,13 @@ function setComments(elem, comments) {
         html += '<div>' + comment + '</div>';
     });
     elem.html(html);
-    initGrid();
+    layout();
 }
 
 function addComment(articleId, comment) {
     var div = $('<div>' + comment + '</div>');
     div.appendTo($('#comments-'+articleId));
-    initGrid();
+    layout();
 }
 
 function deleteComment(commentId) {
