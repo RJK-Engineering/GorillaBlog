@@ -9,7 +9,7 @@ jQuery(function ($) {
 
 function addCommentEventHandlers() {
     $('.show-comments').click(function() {
-        var section = $(this).siblings('.comments');
+        var section = $(this).parents('.comment-section').find('.comments');
         section.toggleClass('show');
         if (section.hasClass('show')) {
             loadComments(section, layout);
@@ -22,7 +22,7 @@ function addCommentEventHandlers() {
     });
 
     $('.leave-comment').click(function() {
-        var form = $(this).siblings('.comment-form');
+        var form = $(this).parents('.comment-section').find('.comment-form');
         form.toggleClass('hidden');
         if (form.hasClass('hidden')) {
             $(this).text('Leave a comment');

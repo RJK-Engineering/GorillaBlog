@@ -82,11 +82,15 @@ label {
     border-radius: 3px;
 }
 
-.comment-section-links {
+.comment-menu {
     margin: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.comment-form {
+    margin-bottom: 10px;
 }
 
 .header-left {

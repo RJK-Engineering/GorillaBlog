@@ -3,7 +3,7 @@ var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
     addOnsubmitEventHandlers(function (form) {
-        var comments = form.siblings('.comments');
+        var comments = form.parents('.comment-section').find('.comments');
         if (comments.hasClass('show')) {
             addComment(comments, {comment: form[0].comment.value});
             layout();

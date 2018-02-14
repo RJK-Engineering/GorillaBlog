@@ -92,8 +92,10 @@ function PrintArticle($article) {
 
 function PrintCommentSection($articleId) {
     echo '<div class="comment-section">';
-        echo '<span class="link show-comments">Show comments</span> | ';
-        echo '<span class="link leave-comment">Leave a comment</span>';
+        echo '<div class="comment-menu">';
+            echo '<span class="link show-comments">Show comments</span> | ';
+            echo '<span class="link leave-comment">Leave a comment</span>';
+        echo '</div>';
         echo '<form class="comment-form hidden">';
             echo '<textarea name="comment" required></textarea><br>';
             echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
