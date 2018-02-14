@@ -2,19 +2,16 @@
 var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
-    addOnsubmitEventHandlers();
-    setupAutosize();
-    loadComments();
+    addOnsubmitEventHandlers(function (form) {
+        var comments = form.siblings('.comments');
+        if (comments.hasClass('show')) {
+            addComment(comments, {comment: form[0].comment.value});
+            layout();
+        }
+    });
 });
 
-function setupAutosize() {
-    autosize($("textarea"));
-    addEventListener('autosize:resized', function() {
-        layout();
-    });
-}
-
-function addOnsubmitEventHandlers() {
+function addOnsubmitEventHandlers(onSuccess) {
     var request;
     $("form.comment-form").submit(function(event) {
         event.preventDefault();
@@ -32,7 +29,7 @@ function addOnsubmitEventHandlers() {
             type: 'put',
             data: serializedData
         }).done(function () {
-            addComment(form[0].articleId.value, form[0].comment.value);
+            if (onSuccess) onSuccess(form);
             form[0].comment.value = '';
         }).fail(function () {
             alert('Error submitting comment');
@@ -43,33 +40,32 @@ function addOnsubmitEventHandlers() {
     });
 }
 
-function loadComments() {
+function loadComments(section, onSuccess) {
     $.ajax({
         url: commentsUrl,
-        type: 'get'
+        type: 'get',
+        data: 'articleId=' + section.data('article-id')
     }).done(function (response) {
-        $.each($(".comment-section"), function() {
-            var articleId = $(this).attr('data-article-id');
-            if (response.comments[articleId]) {
-                setComments($(this), response.comments[articleId]);
-            }
+        if (response.comments.length == 0) {
+            section.text('No comments');
+        }
+        $.each(response.comments, function(i, comment) {
+            addComment(section, comment);
         });
+        if (onSuccess) onSuccess();
     });
 }
 
-function setComments(elem, comments) {
-    var html = '';
-    $.each(comments, function(i, comment) {
-        html += '<div>' + comment + '</div>';
-    });
-    elem.html(html);
-    layout();
+function addComment(section, comment) {
+    clearText(section); // "No comments" text
+    var div = $('<div class="comment">' + comment.comment + '</div>');
+    div.prependTo(section);
 }
 
-function addComment(articleId, comment) {
-    var div = $('<div>' + comment + '</div>');
-    div.appendTo($('#comments-'+articleId));
-    layout();
+function clearText(section) {
+    if (section.children().length == 0) {
+        section.text('');
+    }
 }
 
 function deleteComment(commentId) {

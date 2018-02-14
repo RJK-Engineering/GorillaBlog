@@ -3,7 +3,8 @@ body {
 }
 
 article {
-    padding-top: 20px;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 input {
@@ -22,19 +23,30 @@ label {
     font-weight: bold;
 }
 
+.hidden {
+    display: none;
+}
+
+.link {
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    padding: 0px 10px;
+}
+
 .grid-item {
     width: 100%;
-    margin: 10px 0px;
     border-top: 1px solid black;
 }
 
 .content {
+    padding-top: 10px;
     max-height: unset;
+    overflow: hidden;
 }
 
 .content.minimized {
-    max-height: 400px;
-    overflow: hidden;
+    max-height: 300px;
 }
 
 .content.minimized:after {
@@ -44,23 +56,37 @@ label {
     width: 100%;
     content: "";
     background: linear-gradient(to top,
-        rgba(255,255,255, 1) 8%,
-        rgba(255,255,255, 0) 30%
+        rgba(255,255,255, 1) 0px,
+        rgba(255,255,255, 0) 100px
     );
     pointer-events: none; /* so article content is still accessible */
 }
 
 .show-more {
     width: 100%;
-    position: absolute;
     display: none;
-    justify-content: center;
     cursor: pointer;
-    margin-top: -20px;
+    font-weight: bold;
+    font-size: 14pt;
+    color: blue;
 }
 
 .show-more.enabled {
     display: flex;
+}
+
+.comment {
+    margin: 2px;
+    padding: 2px;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+.comment-section-links {
+    margin: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .header-left {

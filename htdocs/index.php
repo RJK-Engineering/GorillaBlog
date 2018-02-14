@@ -21,7 +21,7 @@ $db = new GorillaBlogDb();
             <div class="col-auto">
                 <h5 class="header-left">Menu</h5>
                 <div>
-                    <div>Read Articles</div>
+                    <div>Front Page</div>
                     <div><a href="edit/newArticle.php">New Article</a></div>
                 </div>
                 <h5 class="header-left">Categories</h5>
@@ -30,7 +30,7 @@ $db = new GorillaBlogDb();
                 </div>
             </div>
             <div class="col-6">
-                <h1>GorillaBlog Articles</h1>
+                <h1>GorillaBlog Front Page</h1>
                 <div id="articles" class="grid">
                     <?php PrintArticles($db); ?>
                 </div>
@@ -61,37 +61,46 @@ function PrintArticles($db) {
             echo ' ' . GetCategoryClassName($category);
         }
         echo ' grid-item">';
-
-        echo '<div class="content">';
-        PrintArticle($article);
-        PrintCommentForm($article['id']);
-        PrintCommentSection($article['id']);
-        echo '</div>';
-
-        echo '<div class="show-more">Read more</div>';
-
+        PrintGritItem($article);
         echo '</div>';
     }
 }
 
+function PrintGritItem($article) {
+    echo '<div class="container">';
+        echo '<div class="row">';
+            echo '<div class="col content minimized">';
+                PrintArticle($article);
+            echo '</div>';
+        echo '</div>';
+
+        echo '<div class="row">';
+            echo '<div class="col">';
+                echo '<div class="show-more">Read more</div>';
+                PrintCommentSection($article['id']);
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+
 function PrintArticle($article) {
     echo '<article>';
-    echo '<h3>' . $article['title'] . '</h3>';
-    echo '<p>' . $article['text'] . '</p>';
+        echo '<h3>' . $article['title'] . '</h3>';
+        echo '<p>' . $article['text'] . '</p>';
     echo '</article>';
 }
 
-function PrintCommentForm($articleId) {
-    echo '<form class="comment-form">';
-    echo '<textarea name="comment" required></textarea><br>';
-    echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
-    echo '<button>Add Comment</button>';
-    echo '</form>';
-}
-
 function PrintCommentSection($articleId) {
-    echo '<div id="comments-' . $articleId .
-        '" class="comment-section" data-article-id="' . $articleId . '"></div>';
+    echo '<div class="comment-section">';
+        echo '<span class="link show-comments">Show comments</span> | ';
+        echo '<span class="link leave-comment">Leave a comment</span>';
+        echo '<form class="comment-form hidden">';
+            echo '<textarea name="comment" required></textarea><br>';
+            echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
+            echo '<button>Comment</button>';
+        echo '</form>';
+        echo '<div class="comments" data-article-id="' . $articleId . '"></div>';
+    echo '</div>';
 }
 
 ?>

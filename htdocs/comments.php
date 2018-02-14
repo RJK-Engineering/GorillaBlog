@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 $db = new GorillaBlogDb();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $response = [ 'comments' => $db->getComments() ];
+    $response = [ 'comments' => $db->getComments($_GET['articleId']) ];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $reqData = GetRequestData();
     $db->insertComment($reqData['articleId'], $reqData['comment']);

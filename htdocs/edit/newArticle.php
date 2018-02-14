@@ -22,7 +22,7 @@ $db = new GorillaBlogDb();
             <div class="col-auto">
                 <h5 class="header-left">Menu</h5>
                 <div>
-                    <div><a href="..">Read Articles</a></div>
+                    <div><a href="..">Front Page</a></div>
                     <div>New Article</div>
                 </div>
             </div>
