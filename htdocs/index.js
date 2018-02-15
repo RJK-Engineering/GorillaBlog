@@ -1,22 +1,25 @@
 jQuery(function ($) {
-    initGrid();
     addFilterEventHandlers();
     addCommentEventHandlers();
     setupTextareaAutosize();
     minimize();
-    layout();
+    initGrid();
 });
 
 function addCommentEventHandlers() {
     $('.show-comments').click(function() {
-        var section = $(this).parents('.comment-section').find('.comments');
-        section.toggleClass('show');
-        if (section.hasClass('show')) {
-            loadComments(section, layout);
+        var commentSection = $(this).parents('.comment-section')
+        var comments = commentSection.find('.comments');
+        commentSection.find('.leave-comment').toggleClass('hidden');
+        comments.toggleClass('show');
+        if (comments.hasClass('show')) {
+            loadComments(comments, layout);
             $(this).text('Hide comments');
         } else {
-            section.text('');
+            comments.text('');
             $(this).text('Show comments');
+            commentSection.find('.comment-form').addClass('hidden');
+            commentSection.find('.leave-comment').text('Leave a comment');
             layout();
         }
     });

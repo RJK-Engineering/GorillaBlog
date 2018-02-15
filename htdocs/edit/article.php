@@ -26,6 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $db->setCategories($_POST['id'], $categories);
 
     $response = [ 'id' => $_POST['id'] ];
+} elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    $reqData = GetRequestData();
+    $db->deleteArticle($reqData['id']);
+    $response = [ 'id' => $reqData['id'] ];
+} elseif ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
+    $reqData = GetRequestData();
+    $db->toggleCommentsDisabled($reqData['id']);
+    $response = [ 'id' => $reqData['id'] ];
 } else {
     http_response_code(400);
     exit;

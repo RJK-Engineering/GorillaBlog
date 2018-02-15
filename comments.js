@@ -2,13 +2,12 @@
 var commentsUrl = 'comments.php';
 
 jQuery(function ($) {
-    addOnsubmitEventHandlers(function (form, id) {
+    addOnsubmitEventHandlers(function (form) {
         var comments = form.parents('.comment-section').find('.comments');
-        addComment(comments, {
-            id: id,
-            comment: form[0].comment.value
-        });
-        if (comments.hasClass('show')) layout();
+        if (comments.hasClass('show')) {
+            addComment(comments, {comment: form[0].comment.value});
+            layout();
+        }
     });
 });
 
@@ -29,8 +28,8 @@ function addOnsubmitEventHandlers(onSuccess) {
             url: commentsUrl,
             type: 'put',
             data: serializedData
-        }).done(function (response) {
-            if (onSuccess) onSuccess(form, response.id);
+        }).done(function () {
+            if (onSuccess) onSuccess(form);
             form[0].comment.value = '';
         }).fail(function () {
             alert('Error submitting comment');
@@ -59,21 +58,24 @@ function loadComments(section, onSuccess) {
 
 function addComment(section, comment) {
     clearText(section); // "No comments" text
-    var div = $('<div class="comment">');
-    div.text(comment.comment);
-    div.attr('data-id', comment.id);
-    div.prependTo(section);
+    var comment = $('<div class="comment">');
+    comment.text(comment.comment);
+    // comment.attr('data-id', comment.id);
+    comment.prependTo(section);
 
     del = $('<span class="link delete-comment">');
     del.text('Delete');
     del.click(function () {
-        deleteComment($(this).parent().data('id'));
-        $(this).parent().remove();
+        deleteComment(comment.id);
+        comment.remove();
+        if (comment.parent().children.length == 0) {
+            section.text('No comments');
+        }
         layout();
     });
-    del.appendTo(div);
+    del.appendTo(comment);
 
-    div.appendTo(section);
+    comment.appendTo(section);
 }
 
 function clearText(section) {
@@ -82,10 +84,12 @@ function clearText(section) {
     }
 }
 
-function deleteComment(id) {
+function deleteComment(commentId) {
     $.ajax({
         url: commentsUrl,
         type: 'delete',
-        data: 'commentId=' + id
+        data: 'commentId=' + commentId
+    }).done(function (response) {
+        alert(JSON.stringify(response));
     });
 }

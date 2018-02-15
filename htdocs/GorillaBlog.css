@@ -23,6 +23,10 @@ label {
     font-weight: bold;
 }
 
+.delete-comment {
+    float: right;
+}
+
 .hidden {
     display: none;
 }
@@ -78,7 +82,7 @@ label {
 .comment {
     margin: 2px;
     padding: 2px;
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
     border-radius: 3px;
 }
 
@@ -115,6 +119,18 @@ label {
 
 .dialog {
     display: none;
+}
+
+table {
+    border: 1px solid black;
+}
+
+td {
+    border-top: 1px solid black;
+}
+
+td.link {
+    /*border: none;*/
 }
 
 #status {

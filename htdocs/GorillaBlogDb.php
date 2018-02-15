@@ -21,7 +21,8 @@ class GorillaBlogDb {
     }
 
     private function loadArticles() {
-        $sql = "select a.id, a.title, a.text, c.title category
+        $sql = "select a.id, a.title, a.text, a.comments_disabled, c.title category,
+                       (select count(*) from comments where article_id=a.id) comment_count
                   from articles a
                   left join article_categories ac on ac.article_id = a.id
                   left join categories c on ac.category_id = c.id
@@ -74,6 +75,22 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
+    public function deleteArticle($id) {
+        $sql = "delete from articles where id=:id";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+    }
+
+    public function toggleCommentsDisabled($articleId) {
+        $sql = "update articles
+                   set comments_disabled=not comments_disabled
+                 where id=:aid";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':aid', $articleId);
+        $statement->execute();
+    }
+
     public function setCategories($articleId, $categories) {
         foreach ($categories as $category) {
             $sql = "insert into article_categories (article_id, category_id)
@@ -115,10 +132,10 @@ class GorillaBlogDb {
         $statement->execute();
     }
 
-    public function deleteComment($commentId) {
-        $sql = "delete from comments where id=:cid";
+    public function deleteComment($id) {
+        $sql = "delete from comments where id=:id";
         $statement = $this->db->prepare($sql);
-        $statement->bindParam(':cid', $commentId);
+        $statement->bindParam(':id', $id);
         $statement->execute();
     }
 

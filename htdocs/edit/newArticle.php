@@ -24,6 +24,7 @@ $db = new GorillaBlogDb();
                 <div>
                     <div><a href="..">Front Page</a></div>
                     <div>New Article</div>
+                    <div><a href="manageArticles.php">Manage Articles</a></div>
                 </div>
             </div>
             <div class="col-6">

@@ -23,13 +23,14 @@ $db = new GorillaBlogDb();
                 <div>
                     <div>Front Page</div>
                     <div><a href="edit/newArticle.php">New Article</a></div>
+                    <div><a href="edit/manageArticles.php">Manage Articles</a></div>
                 </div>
                 <h5 class="header-left">Categories</h5>
                 <div class="filter-buttons">
                     <?php PrintCategories($db); ?>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-sm-6">
                 <h1>GorillaBlog Front Page</h1>
                 <div id="articles" class="grid">
                     <?php PrintArticles($db); ?>
@@ -77,7 +78,7 @@ function PrintGritItem($article) {
         echo '<div class="row">';
             echo '<div class="col">';
                 echo '<div class="show-more">Read more</div>';
-                PrintCommentSection($article['id']);
+                PrintCommentSection($article);
             echo '</div>';
         echo '</div>';
     echo '</div>';
@@ -90,18 +91,19 @@ function PrintArticle($article) {
     echo '</article>';
 }
 
-function PrintCommentSection($articleId) {
+function PrintCommentSection($article) {
+    if ($article['comments_disabled']) return;
     echo '<div class="comment-section">';
         echo '<div class="comment-menu">';
-            echo '<span class="link show-comments">Show comments</span> | ';
-            echo '<span class="link leave-comment">Leave a comment</span>';
+            echo '<div class="link show-comments">Comments</div>';
+            echo '<div class="link leave-comment hidden">Leave a comment</div>';
         echo '</div>';
         echo '<form class="comment-form hidden">';
             echo '<textarea name="comment" required></textarea><br>';
-            echo '<input type="hidden" name="articleId" value="' . $articleId . '">';
+            echo '<input type="hidden" name="articleId" value="' . $article['id'] . '">';
             echo '<button>Comment</button>';
         echo '</form>';
-        echo '<div class="comments" data-article-id="' . $articleId . '"></div>';
+        echo '<div class="comments" data-article-id="' . $article['id'] . '"></div>';
     echo '</div>';
 }
 
