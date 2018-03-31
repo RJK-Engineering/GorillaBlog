@@ -70,7 +70,7 @@ function addSubmitEventHandler() {
             type: method,
             data: serializedData
         }).done(function (response) {
-            displayStatus('Article stored succesfully');
+            displayStatus('Article stored successfully');
             idElem.value = response.id;
         }).fail(function (jqXHR, textStatus) {
             displayStatus('Error submitting article: ' + textStatus);
